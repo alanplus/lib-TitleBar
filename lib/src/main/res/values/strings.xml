@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">lib</string>
+    <color name="title_bar_back_color">#333333</color>
+    <item name="title_bar_left_image_view" type="id" />
+</resources>
