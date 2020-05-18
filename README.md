@@ -7,6 +7,25 @@
 3. 支持主标题、副标题
 4. 支持底部分割线 高度、颜色
 
+### 依赖
+
+```
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+```
+dependencies {
+    implementation 'com.github.alanplus:lib-TitleBar:1.0'
+}
+
+
+```
+
 ### 全局配置
 
 在主题样式中配置

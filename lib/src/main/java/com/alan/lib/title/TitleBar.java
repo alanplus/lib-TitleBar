@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.support.annotation.ColorInt;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
@@ -516,27 +517,34 @@ public class TitleBar extends RelativeLayout {
         return (int) (dpValue * scale + 0.5F);
     }
 
-    public static DisplayMetrics getDisplayMetrics(Context context) {
-        DisplayMetrics metric = new DisplayMetrics();
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(metric);
-        Display display = wm.getDefaultDisplay();
-        int rawWidth = metric.widthPixels;
-        int rawHeight = metric.heightPixels;
-
-        try {
-            Method mGetRawH = Display.class.getMethod("getRawHeight");
-            Method mGetRawW = Display.class.getMethod("getRawWidth");
-            rawWidth = (Integer) mGetRawW.invoke(display);
-            rawHeight = (Integer) mGetRawH.invoke(display);
-        } catch (Exception e) {
-            Log.d("error", Log.getStackTraceString(e));
-        }
-
-        metric.widthPixels = rawWidth;
-        metric.heightPixels = rawHeight;
-        return metric;
+    public static int getScreenWidth(Activity context) {
+        Display display = context.getWindowManager().getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        return point.x;
     }
+
+//    public static DisplayMetrics getDisplayMetrics(Context context) {
+//        DisplayMetrics metric = new DisplayMetrics();
+//        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+//        wm.getDefaultDisplay().getMetrics(metric);
+//        Display display = wm.getDefaultDisplay();
+//        int rawWidth = metric.widthPixels;
+//        int rawHeight = metric.heightPixels;
+//
+//        try {
+//            Method mGetRawH = Display.class.getMethod("getRawHeight");
+//            Method mGetRawW = Display.class.getMethod("getRawWidth");
+//            rawWidth = (Integer) mGetRawW.invoke(display);
+//            rawHeight = (Integer) mGetRawH.invoke(display);
+//        } catch (Exception e) {
+//            Log.d("error", Log.getStackTraceString(e));
+//        }
+//
+//        metric.widthPixels = rawWidth;
+//        metric.heightPixels = rawHeight;
+//        return metric;
+//    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -564,7 +572,7 @@ public class TitleBar extends RelativeLayout {
 
             // 两侧留间距
             int p = Math.max(leftWidth, rightWidth) + dip2px(10);
-            int widthPixels = getDisplayMetrics(getContext()).widthPixels;
+            int widthPixels = getScreenWidth((Activity) getContext());
             int width = widthPixels - 2 * p;
             RelativeLayout.LayoutParams layoutParams = (LayoutParams) mTitleContainer.getLayoutParams();
             if (layoutParams.width != width) {
