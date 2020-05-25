@@ -155,7 +155,7 @@ public class TitleBar extends RelativeLayout {
 
         setLeftButtonClickListener(v -> {
             if (getContext() instanceof Activity) {
-                ((Activity) getContext()).finish();
+                ((Activity) getContext()).onBackPressed();
             }
         });
 
