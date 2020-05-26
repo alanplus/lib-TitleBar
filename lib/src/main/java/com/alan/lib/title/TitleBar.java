@@ -280,6 +280,7 @@ public class TitleBar extends RelativeLayout {
             generateRightImageView();
         }
         this.mRightImageView.setImageResource(drawableId);
+        this.mRightImageView.setVisibility(View.VISIBLE);
     }
 
     /**
